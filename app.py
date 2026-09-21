@@ -5,7 +5,7 @@ class EventPublisher:
     def __init__(self):
         self._events = {}
 
-    ##require search to include a title and ticket quantity
+    ##require search to include a title and ticket quantity, if not entered prompt user to do so
     def publish(self, data):
         if not data.get("title"):
             return self._rejection("Enter an event title")
