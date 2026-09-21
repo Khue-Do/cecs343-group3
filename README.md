@@ -8,7 +8,7 @@ Ticket Purchasing Web Application. The application would act as the distribution
 
 |Coordinator|Khue Do|Khue-do|
 |-|-|-|
-|1. DEVOPS AND CI OWNER|Vanessa Garcia|vanessagarciacruz| - Provide the core infrastructure and security guardrails
+|DEVOPS AND CI OWNER|Vanessa Garcia-Cruz|vanessagarciacruz|
 |QA LEAD|Tyler Lay|Tlay2|
 |UX LEAD|Leanne Larriva|llarriva|
 |DOCUMENTATION AND VERIFICATION LOG LEAD|Gabriel Lester|Weedle203|
