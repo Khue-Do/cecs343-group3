@@ -5,13 +5,6 @@ Claimed: passes when user can sign in with email and password, then takes to hom
 Verified: not yet verified
 Not verified: passes with status code 200
 
-## PR #16 2026-09-23 @tlay2
-Requested: ChatGpt Work
-Generated: 16 Lines , one test function
-Claimed: An organizer can publish event information, including title, description, date, and location.
-Verified: The request succeeds with one pytest.
-Not verified: Authentication, authorization, input validation, persistence after reload, editing/deleting events, and whether the event is actually visible to users. [moderate]
-
 ## PR #16 2026-09-23 @llarriva
 Requested : ChatGPT Work. A pytest for publishing an event as an organizer (app.py)
 Generated : 72 lines. Functions with different test scenarios
@@ -31,3 +24,10 @@ Generated: 18 lines, one test function
 Claimed: fails now, passes when the backend correctly stores the order and changes its status to confirmed after a successful transaction.
 Verified: ran it. Fails with TypeError
 Not verified: it passes after implementation
+
+## PR #16 2026-09-23 @tlay2
+Requested: ChatGpt Work, a pytest test for issue 10
+Generated: 16 Lines , one test function
+Claimed: An organizer can publish event information, including title, description, date, and location.
+Verified: The request succeeds with one pytest.
+Not verified: Authentication, authorization, input validation, persistence after reload, editing/deleting events, and whether the event is actually visible to users. [moderate]
