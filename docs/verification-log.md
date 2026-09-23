@@ -24,3 +24,10 @@ Requested: ChatGPT Work, generate the minimal Flask code for the slice Organizer
 Generated: Two python files app.py and test_app.py.
 Claimed: Syntax validation passed and all five test passed through direct execution.
 Not verified: Did not run. Had another member run and test.
+
+## PR #16 2026-09-23 @Khue-Do
+Requested: ChatGPT Work, a pytest test for Issue 8
+Generated: 18 lines, one test function
+Claimed: fails now, passes when the backend correctly stores the order and changes its status to confirmed after a successful transaction.
+Verified: ran it. Fails with TypeError
+Not verified: it passes after implementation
