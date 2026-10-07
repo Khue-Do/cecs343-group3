@@ -1,12 +1,12 @@
-1. Functional - List of unique ticket purchases of each event #17
+1. Purpose
    Not written yet
-2. Functional - List of unique ticket purchases per user profile #10
+2. Actors
    Not written yet
-3. Quality - Accessability #21
+3. Functional
    Not written yet
-4. Quality - Ticket inventory consistency #19
+4. Quality
    Not written yet
-5. Quality - Payment and ticket transaction integrity #20
+5. Out of scope
    Not written yet
-6. Payment processing Page with Records #8
+6. Open questions
    Not written yet
