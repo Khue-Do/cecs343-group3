@@ -1,5 +1,5 @@
 1. Purpose
-   Not written yet
+   Gabe's section
 2. Actors
    Not written yet
 3. Functional
