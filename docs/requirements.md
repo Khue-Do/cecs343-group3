@@ -1,5 +1,5 @@
 1. Purpose
-   Gabe's section
+   This is for event organizers and event goers. This alleviates the time cost of organizing an event and purchasing tickets for the event
 2. Actors
    Not written yet
 3. Functional
