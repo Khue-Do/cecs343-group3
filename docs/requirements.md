@@ -12,7 +12,9 @@
    5. A user can view their past and present ticket information. Issue #10
 
 4. Quality
-   Not written yet
+ 1. Every completed purchase and cancellation must update ticket inventory to prevent duplicate sales and ensure customers receive their purchased tickets.
+ 2. Tickets must only be issued after successful payment to prevent unpaid purchases and maintain accurate ticket inventory.
+ 3. All customer-facing pages must meet WCAG 2.1 AA standards to ensure customers with disabilities can navigate and purchase tickets independently.
 5. Out of scope
    - Event organizers will not process ticket purchases or payments though the application.
    - Users will not recell or transfer tickets through the application.
