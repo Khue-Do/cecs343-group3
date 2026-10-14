@@ -4,7 +4,7 @@
    1. Event organizer: Publishes events with a venue, date, time, and price.
    2. Ticket Purchaser: Has a account with previous purchased tickets, and can purchase available tickets.
 3. Functional
-   Not written yet
+   
    1. Event publishers can publish events. Issue #7
    2. A user can create an account with their email. Issue #9
    3. A user can purchase tickets. Issue #20
