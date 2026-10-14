@@ -23,6 +23,7 @@ Ticket Purchasing Web Application. The application would act as the distribution
 
 \##Licensing:
 MIT License
+
 Pytest License: The MIT License (MIT)
 
 Copyright (c) 2004 Holger Krekel and others
