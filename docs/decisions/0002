@@ -1,0 +1,7 @@
+# 0002: Where occupancy counts live
+Status : accepted , Class 13
+Decision : We decided to put app.py under a src folder and test_app.py under a test file.
+Because : We will have multiple files needed to run the app and test it, and all files can live under their respective folders. Serves requirement #3
+Rejected : combining requirements, process, and verification into one document , because the current layout allows contributors to easily find files.
+Rejected : combining README.md, CONTRIBUTING.md, SECURITY.md, and LICENSE into one file , because combining all into README would remove the other files.
+Costs : All files in the document folder would affect the directory structure.
