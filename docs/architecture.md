@@ -11,7 +11,26 @@
 |                  |      (system response)    |                                         |
 +------------------+                           +-----------------------------------------+
 
+##Mermaid Sequence Diagram
 
++------------------+                           +------------------+
+| Ticket Purchaser |                           | System           |
++------------------+                           +------------------+
+         |                                               |
+         | openSavedOrder()                              |
+         |---------------------------------------------->|
+         |                                               |
+         |                   recordOrder(ticketSelections, total, transactionReference)
+         |                                <--------------|
+         |                                               |
+         |                   recordStatus(confirmed)     |
+         |                                <--------------|
+         |                                               |
+         | displayOrder(ticketDetails, total,            |
+         |              transactionReference, confirmed)|
+         |<----------------------------------------------|
+         |                                               |
+        
 1.The system records the order’s ticket selections, total, and transaction reference.
 2.The system determines and records the order’s status as confirmed.
 3.The ticket purchaser opens the saved order.
