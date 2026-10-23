@@ -12,15 +12,16 @@
    3. A user can purchase tickets. Issue #20
    4. After purchasing tickets, users receive identifiable ticket information. Issue #17
    5. A user can view their past and present ticket information. Issue #10
+   6. A user can view a saved order's ticket selections, total, transaction reference, and current states. Issue #8
    
 4. Quality
-   1. Number: 1 Ticket inventory consistency:
+   1. Number: 1 Ticket inventory consistency. Issue #19
       - Measured over: Every completed purchase and cancellation
       - Conditions: No seat or ticket may be sold to more than one customer, every completed purchase and cancellation must update ticket    inventory to prevent duplicate sales and ensure customers receive their purchased tickets.
-   3. Number: 2 Payment and ticket transaction integrity:
+   2. Number: 2 Payment and ticket transaction integrity. Issue #20
       - Measured over: All payment attempts.
       - Conditions A ticket order must be issued only when payment succeeds to prevent unpaid purchases and maintain accurate ticket inventory, and failed payments must not reserve inventory.
-   5. Number: 3 Accessibility:
+   3. Number: 3 Accessibility. Issue #21
       - Measured over: All customer-facing pages
       - Conditions: Pages must meet WCAG 2.1 AA requirements, including keyboard navigation, readable contrast, and screen-reader    compatibility; to ensure customers with disabilities can navigate and purchase tickets independently.
       
