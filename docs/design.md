@@ -53,7 +53,6 @@ EventOrganizerEvent    -- has ------------> Ticket
 Order                  -- contains -------> Ticket
 
 3. Ranking:
-command ran: grep -rnE "^(import|from) " --include="*.py"
 Rank  File          Imports  Imported by
 ----  ------------  -------  -----------
 1     app.py        0        1
@@ -61,3 +60,6 @@ Rank  File          Imports  Imported by
 
 2     test_app.py   1        0
       Imports: app.py
+
+4. Hand count and command used:
+   command ran: grep -rnE "^(import|from) " --include="*.py"
