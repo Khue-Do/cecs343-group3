@@ -1,3 +1,7 @@
+There are 5 ands; three import of ticket.py and two imports of order.py.
+Ticket.py and order.py are foundations because they are the only two files that are being imported by other python files.
+Ticket.py as the highest ranked file would change every other file were it to be removed.
+
 1. corrected against use cases: 
 +----------------------+
 | order                |
