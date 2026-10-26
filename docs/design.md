@@ -8,7 +8,7 @@
 | status               |
 +----------------------+
   
-3. corrected against code and issues :
+2. corrected against code and issues :
 +-----------------------+
 | TicketPurchaserAccount|
 +-----------------------+
@@ -52,7 +52,7 @@ EventOrganizerEvent    -- saves and views --> Order
 EventOrganizerEvent    -- has ------------> Ticket
 Order                  -- contains -------> Ticket
 
-4. Ranking:
+3. Ranking:
 Rank  File          Imports  Imported by
 ----  ------------  -------  -----------
 1     app.py        0        1
