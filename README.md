@@ -1,10 +1,10 @@
-# \#cecs343-group3
+# cecs343-group3
 
 
 
 Ticket Purchasing Web Application. The application would act as the distribution website for events. The event organizers would opt in to use the platform to distribute their event. The event goers would be able to purchase the tickets to available events on the platform.
 
-\##
+##
 
 |Coordinator|Khue Do|Khue-do|
 |-|-|-|
@@ -13,7 +13,7 @@ Ticket Purchasing Web Application. The application would act as the distribution
 |UX LEAD|Leanne Larriva|llarriva|
 |DOCUMENTATION AND VERIFICATION LOG LEAD|Gabriel Lester|Weedle203|
 
-\##Planned Ideas:
+## Planned Ideas:
 
 \-Create a storage that hold the tickets and corresponds the pricing and seats
 
@@ -21,7 +21,7 @@ Ticket Purchasing Web Application. The application would act as the distribution
 
 \-Various search filters
 
-\##Licensing:
+## Licensing:
 MIT License
 
 Pytest License: The MIT License (MIT)
@@ -48,5 +48,5 @@ SOFTWARE.
 
 If we publish this project, MIT license requires us to keep the copyright notice.
 
-\##Running: There is no runnable code yet.
+## Running: There is no runnable code yet.
 
