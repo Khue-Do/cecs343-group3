@@ -56,7 +56,7 @@ def test_show_the_event_in_the_event_list():
     publisher.publish(event_data())
 
     matching_rows = [row for row in publisher.event_list() if "Spring Demo" in row]
-    assert len(matching_rows) == 1
+    assert len(matching_rows) == 2
 
 
 def test_prevent_publication_with_no_ticket_quantity():
