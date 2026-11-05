@@ -12,6 +12,11 @@ Rule screenshot:
 • docs/lab4/rule.png
 • docs/lab4/rule-check.png
 
+![Branch protection rule](lab4/rule.png)
+![Required check](lab4/rule-check.png)
+
 ## Dev container
 File: .devcontainer/devcontainer.json
 Codespace screenshot: docs/lab4/codespace.png
+
+![Codespace](lab4/codespace.png)
