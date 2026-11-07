@@ -2,7 +2,7 @@
 
 
 
-Ticket Purchasing Web Application. The application would act as the distribution website for events. The event organizers would opt in to use the platform to distribute their event. The event goers would be able to purchase the tickets to available events on the platform.
+Ticket Purchasing Web Application. The application would act as the distribution website for events. The event organizers would opt in to use the platform to distribute their event. The event goers[...]
 
 ##
 
@@ -22,9 +22,10 @@ Ticket Purchasing Web Application. The application would act as the distribution
 \-Various search filters
 
 ## Verification debt
-##
-|verification debt|Computation Day|
-|Blocking 9| 11/6/2026|
+
+| Verification Debt | Computation Day |
+| --- | --- |
+| Blocking 9 | 11/6/2026 |
 
 ## Licensing:
 MIT License
@@ -54,4 +55,3 @@ SOFTWARE.
 If we publish this project, MIT license requires us to keep the copyright notice.
 
 ## Running: There is no runnable code yet.
-
