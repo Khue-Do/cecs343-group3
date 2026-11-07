@@ -22,6 +22,8 @@ Ticket Purchasing Web Application. The application would act as the distribution
 \-Various search filters
 
 ## Verification debt
+|verification debt|Computation Day|
+|Blocking 9| 11/6/2026|
 
 ## Licensing:
 MIT License
