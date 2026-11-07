@@ -1,35 +1,24 @@
 ##Mermaid Diagram for UC-01 
+```mermaid
+flowchart LR
+    TP["Ticket Purchaser"]
+    S["System<br/>Records ticket selections, total, and transaction reference<br/>Records status: confirmed, pending, canceled, refunded, expired, or valid"]
 
-+------------------+                           +-----------------------------------------+
-| Ticket Purchaser | -- Open saved order ----> | System                                  |
-|                  |    (user action)          | Records ticket selections, total, and   |
-|                  |                           | transaction reference                   |
-|                  |                           | Records status: confirmed, pending,     |
-|                  |                           | canceled, refunded, expired, or valid   |
-|                  | <--- Display order -------|                                         |
-|                  |      details              |                                         |
-|                  |      (system response)    |                                         |
-+------------------+                           +-----------------------------------------+
+    TP -- "Open saved order (user action)" --> S
+    S -- "Display order details (system response)" --> TP
+```
 
 ##Mermaid Sequence Diagram
+```mermaid
+sequenceDiagram
+    participant TP as Ticket Purchaser
+    participant S as System
 
-+------------------+                           +------------------+
-| Ticket Purchaser |                           | System           |
-+------------------+                           +------------------+
-         |                                               |
-         | openSavedOrder()                              |
-         |---------------------------------------------->|
-         |                                               |
-         |                   recordOrder(ticketSelections, total, transactionReference)
-         |                                <--------------|
-         |                                               |
-         |                   recordStatus(confirmed)     |
-         |                                <--------------|
-         |                                               |
-         | displayOrder(ticketDetails, total,            |
-         |              transactionReference, confirmed)|
-         |<----------------------------------------------|
-         |                                               |
+    TP->>S: openSavedOrder()
+    S->>S: recordOrder(ticketSelections, total, transactionReference)
+    S->>S: recordStatus(confirmed)
+    S-->>TP: displayOrder(ticketDetails, total, transactionReference, confirmed)
+```
         
 1.The system records the order’s ticket selections, total, and transaction reference.
 2.The system determines and records the order’s status as confirmed.
