@@ -45,10 +45,10 @@ classDiagram
         time
     }
 
-    TicketPurchaserAccount -.-> Order
-    TicketPurchaserAccount -.-> Ticket
-    EventOrganizerEvent -.-> Order
-    EventOrganizerEvent -.-> Ticket
+    TicketPurchaserAccount ..> Order
+    TicketPurchaserAccount ..> Ticket
+    EventOrganizerEvent ..> Order
+    EventOrganizerEvent ..> Ticket
     Order --> Ticket
 ```
 
