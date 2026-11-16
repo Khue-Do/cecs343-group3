@@ -1,10 +1,10 @@
-# 0003: Where occupancy counts live
+# 0003: Design pattern
 # Decision
 Define the accepted statuses and what each status means, including how valid relates to confirmed, pending, canceled, refunded, and expired. Keep the status model in order.py, this change does not require a new file.
 # Because
 The use case says the order status is recorded as confirmed in the main success scenario, then lists pending, canceled, refunded, expired, and valid as extensions. It does not explain whether valid is a separate status or how these statuses relate. That leaves the behavior unclear to someone implementing or changing order statuses.
 # Rejected
-• Leave the use case and implementation as they are. This preserves the current files, but leaves the status meanings and relationship unclear.
+• Leave the use case and implementation as they are. This preserves the current files, but leaves the status meanings and relationship unclear.\
 • Split status handling into a new file. The described issue is unclear status meaning; the use case and order.py can state the model without introducing another file.
 # Costs
 The use case and order.py must be updated together when the status model changes. Status names and meanings need to stay consistent across those two files.
