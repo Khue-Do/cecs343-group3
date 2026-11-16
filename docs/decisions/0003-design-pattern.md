@@ -1,4 +1,4 @@
-# 0003: Define statuses
+# 0003: Design pattern
 # Decision
 Define the accepted statuses and what each status means, including how valid relates to confirmed, pending, canceled, refunded, and expired. Keep the status model in order.py, this change does not require a new file.
 # Because
