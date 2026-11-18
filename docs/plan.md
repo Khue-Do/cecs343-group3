@@ -58,3 +58,17 @@ The prompt doesn’t include the M4 Issue titles, CD2/M3 feedback items, team me
 | Prepare the ten-minute Codespace demo at `v1.0`, with each member showing something they built and one handled failure path. | `v1.0` tag and completed features | |
 
 **Longest chain (tentative):** M3 feedback → response and design records → M4 feature and test PRs → CI/Codespace fixes → README coverage and changelog → `v1.0` tag → demo. The requested list of M4 Issues is needed to break feature work into specific criterion-sized PR tasks.
+
+Assignment/Owners:
+M3: 
+ Issues(4 task each):
+ #7 gabriel
+ #8 khue
+ #9 vanessa
+ #10 tyler
+ #17 leanne
+ #19 gabriel
+ #20 khue
+ #21 tyler
+ Everyone edit verification log for their code
+
