@@ -1,4 +1,4 @@
-I used the eight open M3 Issues from the first screenshot and the `main` tree from the new screenshot. The tree shows that the app, tests, README, Verification Log, decision-record directory, requirements, architecture doc, and devcontainer config already exist. It doesn’t show their contents or the M4 Issues, so criterion-level code changes and M4 feature work can’t be named more specifically without guessing.
+
 
 **Task sizing:** For each feature Issue, treat each line in its `## Acceptance criteria` checklist as a separate task. Each task ends in one merged PR. The longest chain below is inferred from Issue titles; check it against the acceptance criteria.
 
