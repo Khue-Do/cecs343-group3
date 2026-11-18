@@ -1,3 +1,10 @@
+## PR #32 2026-10-21 @Khue-Do
+Requested : ChatGPT Work. Generate an ASCII sequence diagram for UC-01.
+Generated: ASCII sequence diagram added to docs/architecture.md
+Claimed: The diagram represents the saved-order flow.
+Verified: Confirmed the diagram appears in the merged file on GitHub.
+Not verified: The diagram matches the implemented code. No code tests were run.
+
 ## PR #54 2026-11-15 @vanessagarciacruz
 Verification debt at M2: (blocking 9)\
 Requested : Claude. Change UML design diagram to Mermaid code\
