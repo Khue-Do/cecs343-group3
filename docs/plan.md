@@ -61,14 +61,20 @@ The prompt doesn’t include the M4 Issue titles, CD2/M3 feedback items, team me
 
 Assignment/Owners:
 M3: 
- Issues(4 task each):
- #7 gabriel
- #8 khue
- #9 vanessa
- #10 tyler
- #17 leanne
- #19 gabriel
- #20 khue
- #21 tyler
- Everyone edit verification log for their code
+ Issues(4 task each):      Estimate:
+ #7 gabriel                 3   
+ #8 khue                    3
+ #9 vanessa                 2
+ #10 tyler                  3
+ #17 leanne                 3
+ #19 gabriel                2
+ #20 khue                   2
+ #21 tyler                  2
+ Everyone edit 
+ verification log  
+ for their code             1
+
+ Hours left: 21 
+ Hours we have: 0
+ 
 
