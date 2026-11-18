@@ -4,6 +4,18 @@
 
 ### M3
 
+| Task | Depends on | Longest chain |
+|---|---|---|
+| Close Issue #9, **Account creation & log in with email**: satisfy every acceptance criterion with tests; ensure it has a merged referencing PR, unit and route/API tests, and review comment if generated code was merged. | None stated | |
+| Close Issue #10, **User profile page with current and past tickets**: satisfy every acceptance criterion with tests; ensure it has a merged referencing PR, unit and route/API tests, and review comment if generated code was merged. | None stated | |
+| Close Issue #7, **Show the event in the event list**: satisfy every acceptance criterion with tests; ensure it has a merged referencing PR, unit and route/API tests, and review comment if generated code was merged. | None stated | ✓ |
+| Close Issue #17, **generate unique tickets when purchased**: satisfy every acceptance criterion with tests; ensure it has a merged referencing PR, unit and route/API tests, and review comment if generated code was merged. | Relevant purchase/payment functionality, if required by its acceptance criteria | |
+| Close Issue #19, **Ticket Inventory Consistency**: satisfy every acceptance criterion with tests; ensure it has a merged referencing PR, unit and route/API tests, and review comment if generated code was merged. | Issue #7, if its acceptance criteria require tickets to reference listed events | ✓ |
+| Close Issue #20, **Payment and ticket transaction integrity**: satisfy every acceptance criterion with tests; ensure it has a merged referencing PR, unit and route/API tests, and review comment if generated code was merged. | Issue #19, if its acceptance criteria depend on inventory consistency | ✓ |
+| Close Issue #21, **Accessibility**: satisfy every acceptance criterion with tests; ensure it has a merged referencing PR, unit and route/API tests, and review comment if generated code was merged. | None stated | |
+| Close Issue #8, **Payment Processing Page with Records**: satisfy every acceptance criterion with tests; ensure it has a merged referencing PR, unit and route/API tests, and review comment if generated code was merged. | Payment processing, if required by its acceptance criteria | |
+
+
 **Feature Issues:** #7, #8, #9, #10, #17, #19, #20, #21.
 
 For **each** of those Issues:
