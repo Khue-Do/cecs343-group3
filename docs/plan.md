@@ -89,4 +89,7 @@ M3:
  Hours left: 21 
  Hours we have: 0
  
-
+The risks:
+1. Capacity mismatch. The plan has required work but says there are zero hours available. Vanessa must mark each planned task must, should, or could, then cut could tasks from the bottom until the list fits the available capacity. She should not remove a milestone requirement.
+2. Purchase-flow dependencies may be wrong or incomplete. #17, #19, #20, and #8 span ticket creation, inventory, transaction integrity, and payment records. Khue must check their acceptance criteria and confirm the PR order; #20’s integration test should cover the required parts of the purchase flow.
+3. 1. The demo failure path is unspecified. The plan requires a handled failure path but doesn’t identify one. Vanessa must choose a failure case covered by #9’s acceptance criteria, verify that it is handled, and include it in the demo.
