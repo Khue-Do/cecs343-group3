@@ -1,9 +1,9 @@
 ## PR #49 2026-11-21 @Weedle203
-Requested: ChatGPT Work. Generate files and tests for the event, account, order, ticket, inventory, payment-integrity, and accessibility issues; leave `app.py` and `test_app.py` unchanged.
-Generated: Added `database.py`, `event_organizer_event.py`, `order.py`, `web_app.py`, and issue-specific tests; updated `ticket.py` and `ticket_purchaser_account.py`.
-Claimed: The files implement the supplied acceptance criteria, including ticket ownership, inventory checks, and accessible web forms.
-Verified: GitHub Actions ran pytest: 38 tests passed and 1 failed. The failing test was `test_event_pages_have_semantic_landmarks_labels_and_keyboard_focus_style`.
-Not verified: The test suite is not green. The failure shows `_FORM` rendered literal placeholders instead of the form fields; the fix and a passing rerun have not yet been verified. Full WCAG 2.1 AA compliance has not been audited.
+Requested: ChatGPT Work. Generate files and tests for the event, account, order, ticket, inventory, payment-integrity, and accessibility issues; leave `app.py` and `test_app.py` unchanged.\
+Generated: Added `database.py`, `event_organizer_event.py`, `order.py`, `web_app.py`, and issue-specific tests; updated `ticket.py` and `ticket_purchaser_account.py`.\
+Claimed: The files implement the supplied acceptance criteria, including ticket ownership, inventory checks, and accessible web forms.\
+Verified: GitHub Actions ran pytest: 38 tests passed and 1 failed. The failing test was `test_event_pages_have_semantic_landmarks_labels_and_keyboard_focus_style`.\
+Not verified: The test suite is not green. The failure shows `_FORM` rendered literal placeholders instead of the form fields; the fix and a passing rerun have not yet been verified. Full WCAG 2.1 AA compliance has not been audited.\
 
 ## PR #32 2026-10-21 @Khue-Do
 Requested : ChatGPT Work. Generate an ASCII sequence diagram for UC-01.
