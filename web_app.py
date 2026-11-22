@@ -29,7 +29,10 @@ label{display:block;margin-top:1rem}input,button{font:inherit;padding:.45rem}
 {% if message %}<p role="status" aria-live="polite" class="{{ 'error' if error else 'success' }}">{{ message }}</p>{% endif %}
 {{ body|safe }}</main></body></html>"""
 
-_FORM = """<form method="post">{{ fields|safe }}<button type="submit">{{ submit }}</button></form>"""
+_FORM = (
+    '<form method="post">{fields}'
+    '<button type="submit">{submit}</button></form>'
+)
 
 
 def create_app(
