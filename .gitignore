@@ -1,0 +1,5 @@
+__pycache__/
+.pytest_cache/
+ticketing.sqlite3
+ticketing.sqlite3-shm
+ticketing.sqlite3-wal

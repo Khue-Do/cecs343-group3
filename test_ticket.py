@@ -59,3 +59,39 @@ def test_successful_two_ticket_purchase_issues_distinct_ticket_details():
         )
     }
     assert stored_codes == set(codes)
+
+
+def test_ticket_can_be_reloaded_only_by_its_owner():
+    db = sqlite3.connect(":memory:")
+    service = TicketPurchaseService(
+        db,
+        lambda _method, _amount: True,
+        code_generator=iter(["JZ-1042"]).__next__,
+    )
+    event = {
+        "title": "Jazz Night", "venue": "The Blue Room", "date": "November 1, 2026",
+        "time": "7:00 PM", "price": "25.00",
+    }
+    issued = service.purchase("maya@example.com", event, 1, {})["tickets"][0]
+
+    assert service.get_ticket("maya@example.com", issued["code"]) == issued
+    assert service.get_ticket("lee@example.com", issued["code"]) is None
+    assert service.tickets_for("maya@example.com") == [issued]
+
+
+def test_code_service_failure_returns_no_ticket_code():
+    db = sqlite3.connect(":memory:")
+
+    def unavailable():
+        raise RuntimeError("service unavailable")
+
+    service = TicketPurchaseService(db, lambda _method, _amount: True, unavailable)
+    event = {
+        "title": "Jazz Night", "venue": "The Blue Room", "date": "November 1, 2026",
+        "time": "7:00 PM", "price": "25.00",
+    }
+
+    result = service.purchase("maya@example.com", event, 1, {})
+
+    assert result == {"message": "Ticket could not be issued", "tickets": []}
+    assert db.execute("SELECT COUNT(*) FROM tickets").fetchone()[0] == 0
