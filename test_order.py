@@ -1,7 +1,7 @@
 """Unit tests for Issues #8, #19, and payment/inventory integrity in #20."""
 
 import sqlite3
-
+import pytest
 from event_organizer_event import EventOrganizerEvent
 from order import OrderService
 
@@ -143,75 +143,37 @@ def test_saved_order_displays_transaction_and_status_and_expires():
     assert expired[0]["status"] == "expired"
     assert saved["transaction_ref"] == "TX-8825"
     assert saved["ticket_selections"][0]["title"] == "General Admission"
+    assert saved["total"] == 50
+    assert saved["status"] == "expired"
 
-def test_issue8_pending_order():
-    _db, orders = setup_services()
+
+@pytest.mark.parametrize(
+    "status,transaction",
+    [
+        ("pending", "TX-8822"),
+        ("canceled", "TX-8823"),
+        ("refunded", "TX-8824"),
+    ]
+)
+def test_issue8_saved_order_details(status, transaction):
+    db, orders = setup_services()
 
     orders.record_order(
-        "ORD-300", "ana@example.com", "EVT-104",
-        "50.00", "TX-8822", "pending",
+        "ORD-300",
+        "ana@example.com",
+        "EVT-104",
+        "50.00",
+        transaction,
+        status,
         [{"title": "General Admission", "quantity": 1}]
     )
 
-    order = orders.get_order("ORD-300")
+    saved = orders.get_order("ORD-300")
 
-    assert order["ticket_selections"][0]["title"] == "General Admission"
-    assert order["total"] == 50
-    assert order["transaction_ref"] == "TX-8822"
-    assert order["status"] == "pending"
+    assert saved["ticket_selections"][0]["title"] == "General Admission"
+    assert saved["ticket_selections"][0]["quantity"] == 1
+    assert saved["total"] == 50
+    assert saved["transaction_ref"] == transaction
+    assert saved["status"] == status
 
-
-def test_issue8_declined_order():
-    _db, orders = setup_services()
-
-    orders.record_order(
-        "ORD-301", "ana@example.com", "EVT-104",
-        "50.00", "TX-8823", "canceled",
-        [{"title": "General Admission", "quantity": 1}]
-    )
-
-    order = orders.get_order("ORD-301")
-
-    assert order["ticket_selections"][0]["title"] == "General Admission"
-    assert order["total"] == 50
-    assert order["transaction_ref"] == "TX-8823"
-    assert order["status"] == "canceled"
-
-
-def test_issue8_refunded_order():
-    _db, orders = setup_services()
-
-    orders.record_order(
-        "ORD-301", "ana@example.com", "EVT-104",
-        "50.00", "TX-8824", "refunded",
-        [{"title": "General Admission", "quantity": 1}]
-    )
-
-    order = orders.get_order("ORD-301")
-
-    assert order["ticket_selections"][0]["title"] == "General Admission"
-    assert order["total"] == 50
-    assert order["transaction_ref"] == "TX-8824"
-    assert order["status"] == "refunded"
-
-
-def test_issue8_expired_order():
-    _db, orders = setup_services()
-
-    orders.record_order(
-        "ORD-302", "ana@example.com", "EVT-104",
-        "50.00", "TX-8825", "pending",
-        [{"title": "General Admission", "quantity": 1}],
-        deadline="2026-10-12 14:00 America/Los_Angeles"
-    )
-
-    orders.expire_past_deadlines(
-        now="2026-11-21T00:00:00+00:00"
-    )
-
-    order = orders.get_order("ORD-302")
-
-    assert order["ticket_selections"][0]["title"] == "General Admission"
-    assert order["total"] == 50
-    assert order["transaction_ref"] == "TX-8825"
-    assert order["status"] == "expired"
+    db.close()
