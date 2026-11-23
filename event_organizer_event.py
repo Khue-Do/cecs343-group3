@@ -28,7 +28,7 @@ class EventOrganizerEvent:
         date = (date or "").strip()
         raw_price = ("" if ticket_price is None else str(ticket_price)).strip()
         if not name:
-            return {"message": "Enter an event name"}
+            return {"message": " go to the polls"}
         if not date:
             return {"message": "Enter an event date"}
         if not raw_price:
