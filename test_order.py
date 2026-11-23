@@ -143,3 +143,75 @@ def test_saved_order_displays_transaction_and_status_and_expires():
     assert expired[0]["status"] == "expired"
     assert saved["transaction_ref"] == "TX-8825"
     assert saved["ticket_selections"][0]["title"] == "General Admission"
+
+def test_issue8_pending_order():
+    _db, orders = setup_services()
+
+    orders.record_order(
+        "ORD-300", "ana@example.com", "EVT-104",
+        "50.00", "TX-8822", "pending",
+        [{"title": "General Admission", "quantity": 1}]
+    )
+
+    order = orders.get_order("ORD-300")
+
+    assert order["ticket_selections"][0]["title"] == "General Admission"
+    assert order["total"] == 50
+    assert order["transaction_ref"] == "TX-8822"
+    assert order["status"] == "pending"
+
+
+def test_issue8_declined_order():
+    _db, orders = setup_services()
+
+    orders.record_order(
+        "ORD-301", "ana@example.com", "EVT-104",
+        "50.00", "TX-8823", "canceled",
+        [{"title": "General Admission", "quantity": 1}]
+    )
+
+    order = orders.get_order("ORD-301")
+
+    assert order["ticket_selections"][0]["title"] == "General Admission"
+    assert order["total"] == 50
+    assert order["transaction_ref"] == "TX-8823"
+    assert order["status"] == "canceled"
+
+
+def test_issue8_refunded_order():
+    _db, orders = setup_services()
+
+    orders.record_order(
+        "ORD-301", "ana@example.com", "EVT-104",
+        "50.00", "TX-8824", "refunded",
+        [{"title": "General Admission", "quantity": 1}]
+    )
+
+    order = orders.get_order("ORD-301")
+
+    assert order["ticket_selections"][0]["title"] == "General Admission"
+    assert order["total"] == 50
+    assert order["transaction_ref"] == "TX-8824"
+    assert order["status"] == "refunded"
+
+
+def test_issue8_expired_order():
+    _db, orders = setup_services()
+
+    orders.record_order(
+        "ORD-302", "ana@example.com", "EVT-104",
+        "50.00", "TX-8825", "pending",
+        [{"title": "General Admission", "quantity": 1}],
+        deadline="2026-10-12 14:00 America/Los_Angeles"
+    )
+
+    orders.expire_past_deadlines(
+        now="2026-11-21T00:00:00+00:00"
+    )
+
+    order = orders.get_order("ORD-302")
+
+    assert order["ticket_selections"][0]["title"] == "General Admission"
+    assert order["total"] == 50
+    assert order["transaction_ref"] == "TX-8825"
+    assert order["status"] == "expired"
