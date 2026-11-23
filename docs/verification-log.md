@@ -6,11 +6,11 @@ Verified: Reviewed the suggested implementation against the five acceptance crit
 Not verified: Integration with the existing application, route/API tests, concurrent payment handling, and full end-to-end payment processing have not been verified. 
 
 ## PR #65 2026-11-22 @Khue-Do
-Requested: ChatGPT. Implement Issue #8, including order details, payment statuses, and tests for the acceptance criteria.
-Generated: order_records.py, order_api.py, test_order_records.py, and test_order_api.py to store and display ticket selections, totals, transaction references, and payment statuses.
-Claimed: The implementation handles Pending, Canceled, Refunded, and Expired order statuses and displays the correct ticket details, total, and transaction reference.
-Verified: Reviewed the suggested implementation against the four acceptance criteria in Issue #8. Test execution and results have not yet been confirmed.
-Not verified: Integration with the existing application, order persistence, expired-payment handling through the API, and full route/API test coverage have not been verified. 
+Requested: ChatGPT. Implement Issue #8, including order statuses, and tests for the acceptance criteria.
+Generated: using the existing order.py, web_app.py, and test_order.py
+Claimed: The implementation supports Pending, Canceled, Refunded, and Expired statuses and records ticket selections, totals, and transaction references.
+Verified: Reviewed the existing order.py and test_order.py. Confirmed that OrderService contains methods for saving orders, retrieving order details, updating statuses, and expiring pending orders. Teammate review identified redundant files in PR #65.
+Not verified: The revised tests have not been confirmed as passing. Route/API test coverage, GitHub Actions results, and removal of duplicate files still need verification.
 
 ## PR #61 2026-11-22 @vanessagarciacruz
 Requested : Claude. Update test_ticket_purchaser_account.py to implement tests for acceptance criteria\
