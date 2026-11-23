@@ -1,9 +1,9 @@
 ## PR #66 2026-11-22 @Khue-Do
 Requested: ChatGPT. Implement Issue #20, including successful payments, failed payments, inventory updates, and payment retries.
-Generated: payment_integrity.py and test_payment_integrity.py with payment transaction logic and five unit tests.
-Claimed: Successful payments create ticket orders and update inventory. Failed payments do not create orders or change inventory. Repeated successful payment requests do not create duplicate orders.
-Verified: Reviewed the suggested implementation against the five acceptance criteria in Issue #20. Test execution and results have not yet been confirmed.
-Not verified: Integration with the existing application, route/API tests, concurrent payment handling, and full end-to-end payment processing have not been verified. 
+Generated: adding three tests to the existing test_order.py for successful order creation, inventory reservation, and failed-payment inventory protection.
+Claimed: The existing OrderService handles payment transactions, creates orders after successful payments, preserves inventory after failed payments, and prevents duplicate orders on successful retries.
+Verified: Reviewed the existing order.py and test_order.py. Confirmed that the implementation includes SQLite transactions, payment attempt records, inventory checks, and idempotency protection. Teammate review of PR #66 identified duplication with the existing order system.
+Not verified: The suggested tests have not yet been confirmed as committed or passing. Removal of duplicate files, route/API test coverage, and successful GitHub Actions execution have not been verified. 
 
 ## PR #65 2026-11-22 @Khue-Do
 Requested: ChatGPT. Implement Issue #8, including order statuses, and tests for the acceptance criteria.
