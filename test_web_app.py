@@ -118,6 +118,13 @@ def test_profile_hides_unpublished_events(tmp_path):
         status="unpublished",
     )
 
+    app.extensions["events"].publish_event(
+	"Cedar Room",
+	"2026-11-15",
+	"25",
+	event_id="EVT-105",
+    )
+
     client = app.test_client()
 
     with client.session_transaction() as state:
@@ -131,7 +138,7 @@ def test_profile_hides_unpublished_events(tmp_path):
     event_list = html.split("<h2>Event list</h2>", 1)[1].split("<form", 1)[0]
 
     assert "Harbor Lights" not in event_list
-
+    assert "Cedar Room" in event_list
 
 def test_issue_7_publisher_submission_displays_saved_event_in_list(tmp_path):
     app, _sent = make_app(tmp_path)
