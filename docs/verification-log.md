@@ -1,3 +1,17 @@
+## PR #66 2026-11-22 @Khue-Do
+Requested: ChatGPT. Implement Issue #20, including successful payments, failed payments, inventory updates, and payment retries.
+Generated: adding three tests to the existing test_order.py for successful order creation, inventory reservation, and failed-payment inventory protection.
+Claimed: The existing OrderService handles payment transactions, creates orders after successful payments, preserves inventory after failed payments, and prevents duplicate orders on successful retries.
+Verified: Reviewed the existing order.py and test_order.py. Confirmed that the implementation includes SQLite transactions, payment attempt records, inventory checks, and idempotency protection. Teammate review of PR #66 identified duplication with the existing order system.
+Not verified: The suggested tests have not yet been confirmed as committed or passing. Removal of duplicate files, route/API test coverage, and successful GitHub Actions execution have not been verified. 
+
+## PR #65 2026-11-22 @Khue-Do
+Requested: ChatGPT. Implement Issue #8, including order statuses, and tests for the acceptance criteria.
+Generated: using the existing order.py, web_app.py, and test_order.py
+Claimed: The implementation supports Pending, Canceled, Refunded, and Expired statuses and records ticket selections, totals, and transaction references.
+Verified: Reviewed the existing order.py and test_order.py. Confirmed that OrderService contains methods for saving orders, retrieving order details, updating statuses, and expiring pending orders. Teammate review identified redundant files in PR #65.
+Not verified: The revised tests have not been confirmed as passing. Route/API test coverage, GitHub Actions results, and removal of duplicate files still need verification.
+
 ## PR #61 2026-11-22 @vanessagarciacruz
 Requested : Claude. Update test_ticket_purchaser_account.py to implement tests for acceptance criteria\
 Generated : 145 lines, helper functions and a test for each criteria\
