@@ -1,3 +1,17 @@
+## PR #66 2026-11-22 @Khue-Do
+Requested: ChatGPT. Implement Issue #20, including successful payments, failed payments, inventory updates, and payment retries.
+Generated: payment_integrity.py and test_payment_integrity.py with payment transaction logic and five unit tests.
+Claimed: Successful payments create ticket orders and update inventory. Failed payments do not create orders or change inventory. Repeated successful payment requests do not create duplicate orders.
+Verified: Reviewed the suggested implementation against the five acceptance criteria in Issue #20. Test execution and results have not yet been confirmed.
+Not verified: Integration with the existing application, route/API tests, concurrent payment handling, and full end-to-end payment processing have not been verified. 
+
+## PR #65 2026-11-22 @Khue-Do
+Requested: ChatGPT. Implement Issue #8, including order details, payment statuses, and tests for the acceptance criteria.
+Generated: order_records.py, order_api.py, test_order_records.py, and test_order_api.py to store and display ticket selections, totals, transaction references, and payment statuses.
+Claimed: The implementation handles Pending, Canceled, Refunded, and Expired order statuses and displays the correct ticket details, total, and transaction reference.
+Verified: Reviewed the suggested implementation against the four acceptance criteria in Issue #8. Test execution and results have not yet been confirmed.
+Not verified: Integration with the existing application, order persistence, expired-payment handling through the API, and full route/API test coverage have not been verified. 
+
 ## PR #61 2026-11-22 @vanessagarciacruz
 Requested : Claude. Update test_ticket_purchaser_account.py to implement tests for acceptance criteria\
 Generated : 145 lines, helper functions and a test for each criteria\
