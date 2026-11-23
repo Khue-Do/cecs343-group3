@@ -1,7 +1,7 @@
 """Unit tests for Issues #8, #19, and payment/inventory integrity in #20."""
 
 import sqlite3
-
+import pytest
 from event_organizer_event import EventOrganizerEvent
 from order import OrderService
 
@@ -14,7 +14,14 @@ def setup_services(ticket_count=1, payment=lambda _method, _total: True):
     )
     EventOrganizerEvent(db).set_seats("EVT-104", ["A1"])
     return db, OrderService(db, payment, code_generator=iter(["JZ-1042", "JZ-1043"]).__next__)
+@pytest.fixture
+def order_services():
+    db, orders = setup_services()
 
+    try:
+        yield orders
+    finally:
+        db.close()
 
 def test_canceling_order_releases_seat_for_another_purchase():
     _db, orders = setup_services()
@@ -66,6 +73,9 @@ def test_declined_payment_creates_no_ticket_and_does_not_reserve_seat():
     assert db.execute("SELECT COUNT(*) FROM orders").fetchone()[0] == 0
     assert db.execute("SELECT status FROM payment_attempts").fetchone()[0] == "declined"
     assert seat_owner is None
+    assert db.execute(
+        "SELECT status FROM payment_attempts"
+    ).fetchone()[0] == "declined"
 
 
 def test_pending_payment_is_saved_without_issuing_or_reserving_tickets():
@@ -143,3 +153,38 @@ def test_saved_order_displays_transaction_and_status_and_expires():
     assert expired[0]["status"] == "expired"
     assert saved["transaction_ref"] == "TX-8825"
     assert saved["ticket_selections"][0]["title"] == "General Admission"
+    assert saved["total"] == 50
+    assert saved["status"] == "expired"
+
+
+
+@pytest.mark.parametrize(
+    "status,transaction",
+    [
+        ("pending", "TX-8822"),
+        ("canceled", "TX-8823"),
+        ("refunded", "TX-8824"),
+    ]
+)
+def test_issue8_saved_order_details(
+    order_services, status, transaction
+):
+    orders = order_services
+
+    orders.record_order(
+        "ORD-300",
+        "ana@example.com",
+        "EVT-104",
+        "50.00",
+        transaction,
+        status,
+        [{"title": "General Admission", "quantity": 1}]
+    )
+
+    saved = orders.get_order("ORD-300")
+
+    assert saved["ticket_selections"][0]["title"] == "General Admission"
+    assert saved["ticket_selections"][0]["quantity"] == 1
+    assert saved["total"] == 50
+    assert saved["transaction_ref"] == transaction
+    assert saved["status"] == status
