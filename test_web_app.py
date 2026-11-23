@@ -90,7 +90,47 @@ def test_published_event_is_visible_and_date_search_returns_no_events(tmp_path):
 
     assert b"Harbor Lights" in found.data
     assert b"$40.00" in found.data
+    assert b"2026-11-14" in found.data
     assert b"No events found" in missing.data
+
+
+def test_profile_shows_no_tickets(tmp_path):
+    app, _sent = make_app(tmp_path)
+    client = app.test_client()
+
+    with client.session_transaction() as state:
+        state["email"] = "maya@example.com"
+
+    response = client.get("/profile")
+
+    assert response.status_code == 200
+    assert b"No tickets" in response.data
+
+
+def test_profile_hides_unpublished_events(tmp_path):
+    app, _sent = make_app(tmp_path)
+
+    app.extensions["events"].publish_event(
+        "Harbor Lights",
+        "2026-11-14",
+        "40",
+        event_id="EVT-104",
+        status="unpublished",
+    )
+
+    client = app.test_client()
+
+    with client.session_transaction() as state:
+        state["email"] = "maya@example.com"
+
+    response = client.get("/profile")
+
+    assert response.status_code == 200
+
+    html = response.data.decode("utf-8")
+    event_list = html.split("<h2>Event list</h2>", 1)[1].split("<form", 1)[0]
+
+    assert "Harbor Lights" not in event_list
 
 
 def test_issue_7_publisher_submission_displays_saved_event_in_list(tmp_path):
@@ -129,6 +169,33 @@ def test_unpublished_and_missing_price_events_render_without_a_price(tmp_path):
     assert b"Harbor Lights" not in response.data
 
 
+def test_profile_shows_missing_ticket_price(tmp_path):
+    app, _sent = make_app(tmp_path)
+    db = app.extensions["ticketing_db"]
+
+    with db:
+        db.execute(
+            "INSERT INTO events (event_id, title, event_date, price_cents, status) "
+            "VALUES (?, ?, ?, NULL, 'published')",
+            ("EVT-104", "Harbor Lights", "2026-11-14"),
+        )
+
+    client = app.test_client()
+
+    with client.session_transaction() as state:
+        state["email"] = "maya@example.com"
+
+    response = client.get("/profile")
+
+    assert response.status_code == 200
+
+    html = response.data.decode("utf-8")
+    event_list = html.split("<h2>Event list</h2>", 1)[1].split("<form", 1)[0]
+
+    assert "Harbor Lights — 2026-11-14 — missing a ticket price" in event_list
+    assert "$" not in event_list
+
+
 def test_event_service_timeout_is_shown_as_a_message(tmp_path):
     app, _sent = make_app(tmp_path)
 
@@ -138,6 +205,25 @@ def test_event_service_timeout_is_shown_as_a_message(tmp_path):
     app.extensions["events"].list_events = timeout
 
     response = app.test_client().get("/events")
+
+    assert response.status_code == 503
+    assert b"Events could not be loaded" in response.data
+
+
+def test_profile_event_service_timeout(tmp_path):
+    app, _sent = make_app(tmp_path)
+
+    def timeout(**_kwargs):
+        raise TimeoutError
+
+    app.extensions["events"].list_events = timeout
+
+    client = app.test_client()
+
+    with client.session_transaction() as state:
+        state["email"] = "maya@example.com"
+
+    response = client.get("/profile")
 
     assert response.status_code == 503
     assert b"Events could not be loaded" in response.data
@@ -285,6 +371,44 @@ def test_profile_separates_current_and_past_tickets_and_searches_events(tmp_path
     assert b"T-052" in response.data
     assert b"Harbor Lights" in response.data
     assert b"$40.00" in response.data
+    
+    html = response.data.decode("utf-8")
+
+    current_start = html.index("<h2>Current tickets</h2>")
+    past_start = html.index("<h2>Past tickets</h2>")
+    event_start = html.index("<h2>Event list</h2>")
+
+    assert current_start < html.index("T-104") < past_start
+    assert past_start < html.index("T-052") < event_start
+    
+    event_list = html[event_start:]
+
+    assert "Harbor Lights — 2026-11-14 — $40.00" in event_list
+
+
+def test_profile_search_no_matching_date(tmp_path):
+    
+    app, _sent = make_app(tmp_path)
+
+    app.extensions["events"].publish_event(
+        "Harbor Lights",
+        "2026-11-14",
+        "40",
+        venue="Harbor",
+        time="7:00 PM",
+        ticket_count=2,
+        event_id="EVT-104",
+    )
+
+    client = app.test_client()
+
+    with client.session_transaction() as state:
+        state["email"] = "maya@example.com"
+
+    response = client.get("/profile?date=2026-11-15")
+
+    assert response.status_code == 200
+    assert b"No events found" in response.data
 
 
 def test_order_screen_shows_saved_payment_details(tmp_path):
