@@ -54,4 +54,8 @@ SOFTWARE.
 
 If we publish this project, MIT license requires us to keep the copyright notice.
 
-## Running: There is no runnable code yet.
+## Coverage
+Last CI run: 87% (command: `pytest --cov=. --cov-report=term`) 
+
+## Running: In codespace:
+python web_app.py
