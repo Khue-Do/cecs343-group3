@@ -143,3 +143,67 @@ def test_saved_order_displays_transaction_and_status_and_expires():
     assert expired[0]["status"] == "expired"
     assert saved["transaction_ref"] == "TX-8825"
     assert saved["ticket_selections"][0]["title"] == "General Admission"
+
+def test_issue20_successful_payment_creates_order():
+    db, orders = setup_services()
+
+    result = orders.purchase(
+        "maya@example.com", "EVT-104", 1, {},
+        order_ref="ORD-2001", seats=["A1"]
+    )
+
+    assert result["message"] == "Order confirmed"
+    assert result["order"]["status"] == "confirmed"
+    assert len(result["tickets"]) == 1
+    assert db.execute(
+        "SELECT COUNT(*) FROM orders"
+    ).fetchone()[0] == 1
+
+
+def test_issue20_successful_payment_reserves_seat():
+    db, orders = setup_services()
+
+    orders.purchase(
+        "maya@example.com", "EVT-104", 1, {},
+        order_ref="ORD-2001", seats=["A1"]
+    )
+
+    seat = db.execute(
+        "SELECT order_ref FROM event_seats "
+        "WHERE event_id = 'EVT-104' AND seat = 'A1'"
+    ).fetchone()
+
+    assert seat[0] == "ORD-2001"
+    assert db.execute(
+        "SELECT COUNT(*) FROM tickets "
+        "WHERE status = 'valid'"
+    ).fetchone()[0] == 1
+
+
+def test_issue20_failed_payment_keeps_inventory():
+    db, orders = setup_services(
+        payment=lambda _method, _total: False
+    )
+
+    result = orders.purchase(
+        "maya@example.com", "EVT-104", 1, {},
+        order_ref="ORD-2001", seats=["A1"]
+    )
+
+    assert result["order"] is None
+    assert result["tickets"] == []
+
+    assert db.execute(
+        "SELECT COUNT(*) FROM orders"
+    ).fetchone()[0] == 0
+
+    assert db.execute(
+        "SELECT COUNT(*) FROM tickets"
+    ).fetchone()[0] == 0
+
+    seat = db.execute(
+        "SELECT order_ref FROM event_seats "
+        "WHERE event_id = 'EVT-104' AND seat = 'A1'"
+    ).fetchone()
+
+    assert seat[0] is None
