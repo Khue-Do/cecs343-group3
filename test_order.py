@@ -66,6 +66,9 @@ def test_declined_payment_creates_no_ticket_and_does_not_reserve_seat():
     assert db.execute("SELECT COUNT(*) FROM orders").fetchone()[0] == 0
     assert db.execute("SELECT status FROM payment_attempts").fetchone()[0] == "declined"
     assert seat_owner is None
+    assert db.execute(
+        "SELECT COUNT(*) FROM tickets"
+    ).fetchone()[0] == 0
 
 
 def test_pending_payment_is_saved_without_issuing_or_reserving_tickets():
@@ -88,8 +91,10 @@ def test_pending_payment_is_saved_without_issuing_or_reserving_tickets():
     ).fetchone()[0] is None
 
 
+
 def test_successful_retry_issues_one_order_and_updates_inventory_once():
     db, _orders = setup_services()
+
     outcomes = iter([False, True])
     charges = []
 
@@ -98,26 +103,65 @@ def test_successful_retry_issues_one_order_and_updates_inventory_once():
         return next(outcomes)
 
     orders = OrderService(
-        db, processor, code_generator=iter(["JZ-1042"]).__next__
+        db, processor,
+        code_generator=iter(["JZ-1042"]).__next__
     )
+
+    # First payment fails
     first = orders.purchase(
-        "maya@example.com", "EVT-104", 1, {}, order_ref="ORD-1001", seats=["A1"]
+        "maya@example.com", "EVT-104", 1, {},
+        order_ref="ORD-1001",
+        seats=["A1"],
+        idempotency_key="PAY-1001"
     )
+
+    # Retry with the same key succeeds
     second = orders.purchase(
-        "maya@example.com", "EVT-104", 1, {}, order_ref="ORD-1001", seats=["A1"]
+        "maya@example.com", "EVT-104", 1, {},
+        order_ref="ORD-1001",
+        seats=["A1"],
+        idempotency_key="PAY-1001"
     )
-    repeated_success = orders.purchase(
-        "maya@example.com", "EVT-104", 1, {}, order_ref="ORD-1001", seats=["A1"]
+
+    # Repeated successful request must not create duplicates
+    repeated = orders.purchase(
+        "maya@example.com", "EVT-104", 1, {},
+        order_ref="ORD-1001",
+        seats=["A1"],
+        idempotency_key="PAY-1001"
     )
 
     assert first["order"] is None
+    assert first["tickets"] == []
     assert second["message"] == "Order confirmed"
-    assert repeated_success["order"]["order_ref"] == "ORD-1001"
-    assert len(repeated_success["tickets"]) == 1
+    assert len(second["tickets"]) == 1
+    assert repeated["order"]["order_ref"] == "ORD-1001"
+    assert len(repeated["tickets"]) == 1
+
+    # Only two payment attempts should occur
     assert len(charges) == 2
-    assert db.execute("SELECT COUNT(*) FROM orders").fetchone()[0] == 1
-    assert db.execute("SELECT COUNT(*) FROM tickets WHERE status = 'valid'").fetchone()[0] == 1
-    assert db.execute("SELECT COUNT(*) FROM payment_attempts").fetchone()[0] == 2
+
+    # Exactly one order
+    assert db.execute(
+        "SELECT COUNT(*) FROM orders"
+    ).fetchone()[0] == 1
+
+    # Exactly one valid ticket
+    assert db.execute(
+        "SELECT COUNT(*) FROM tickets WHERE status = 'valid'"
+    ).fetchone()[0] == 1
+
+    # Exactly one seat reservation
+    assert db.execute(
+        "SELECT COUNT(*) FROM event_seats "
+        "WHERE order_ref = 'ORD-1001'"
+    ).fetchone()[0] == 1
+
+    # Exactly two payment attempts
+    assert db.execute(
+        "SELECT COUNT(*) FROM payment_attempts "
+        "WHERE idempotency_key = 'PAY-1001'"
+    ).fetchone()[0] == 2
 
 
 def test_second_cancellation_and_missing_order_messages():
@@ -143,3 +187,40 @@ def test_saved_order_displays_transaction_and_status_and_expires():
     assert expired[0]["status"] == "expired"
     assert saved["transaction_ref"] == "TX-8825"
     assert saved["ticket_selections"][0]["title"] == "General Admission"
+    assert saved["total"] == 50
+    assert saved["status"] == "expired"
+
+def test_issue20_successful_payment_creates_order():
+    db, orders = setup_services()
+
+    result = orders.purchase(
+        "maya@example.com", "EVT-104", 1, {},
+        order_ref="ORD-2001", seats=["A1"]
+    )
+
+    assert result["message"] == "Order confirmed"
+    assert result["order"]["status"] == "confirmed"
+    assert len(result["tickets"]) == 1
+    assert db.execute(
+        "SELECT COUNT(*) FROM orders"
+    ).fetchone()[0] == 1
+
+
+def test_issue20_successful_payment_reserves_seat():
+    db, orders = setup_services()
+
+    orders.purchase(
+        "maya@example.com", "EVT-104", 1, {},
+        order_ref="ORD-2001", seats=["A1"]
+    )
+
+    seat = db.execute(
+        "SELECT order_ref FROM event_seats "
+        "WHERE event_id = 'EVT-104' AND seat = 'A1'"
+    ).fetchone()
+
+    assert seat[0] == "ORD-2001"
+    assert db.execute(
+        "SELECT COUNT(*) FROM tickets "
+        "WHERE status = 'valid'"
+    ).fetchone()[0] == 1
